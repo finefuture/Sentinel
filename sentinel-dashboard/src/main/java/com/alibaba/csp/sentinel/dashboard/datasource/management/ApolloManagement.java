@@ -1,6 +1,5 @@
 package com.alibaba.csp.sentinel.dashboard.datasource.management;
 
-import com.alibaba.csp.sentinel.dashboard.Constants;
 import com.alibaba.fastjson.JSONObject;
 import com.ctrip.framework.apollo.openapi.client.ApolloOpenApiClient;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -9,13 +8,16 @@ import org.springframework.stereotype.Component;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import static com.alibaba.csp.sentinel.dashboard.Constants.DATASOURCE_APOLLO;
+import static com.alibaba.csp.sentinel.dashboard.Constants.MANAGEMENT;
+
 /**
  * Apollo Client Management
  *
  * @author longqiang
  */
-@Component(Constants.APOLLO_MANAGEMENT)
-@ConditionalOnProperty(name = "ruleDataSource", havingValue = "apollo")
+@Component(DATASOURCE_APOLLO + MANAGEMENT)
+@ConditionalOnProperty(name = "disableApollo", havingValue = "false", matchIfMissing = true)
 public class ApolloManagement implements DataSourceManagement<ApolloOpenApiClient>{
 
     private Map<String, ApolloOpenApiClient> clientPool = new ConcurrentHashMap<>(16);

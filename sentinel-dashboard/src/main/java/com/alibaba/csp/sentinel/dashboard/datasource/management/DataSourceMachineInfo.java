@@ -14,7 +14,7 @@ public class DataSourceMachineInfo extends MachineInfo {
     private String authorityRulesKey;
     private String systemRulesKey;
     private String paramFlowRulesKey;
-    private String dataSourceType;
+    private DataSourceType dataSourceType;
 
     public String getDegradeRulesKey() {
         return degradeRulesKey;
@@ -56,11 +56,11 @@ public class DataSourceMachineInfo extends MachineInfo {
         this.paramFlowRulesKey = paramFlowRulesKey;
     }
 
-    public String getDataSourceType() {
+    public DataSourceType getDataSourceType() {
         return dataSourceType;
     }
 
-    public void setDataSourceType(String dataSourceType) {
+    public void setDataSourceType(DataSourceType dataSourceType) {
         this.dataSourceType = dataSourceType;
     }
 

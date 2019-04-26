@@ -1,6 +1,5 @@
 package com.alibaba.csp.sentinel.dashboard.datasource.management;
 
-import com.alibaba.csp.sentinel.dashboard.Constants;
 import com.alibaba.csp.sentinel.log.RecordLog;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -14,13 +13,16 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
 
+import static com.alibaba.csp.sentinel.dashboard.Constants.DATASOURCE_NACOS;
+import static com.alibaba.csp.sentinel.dashboard.Constants.MANAGEMENT;
+
 /**
  * Nacos Client Management
  *
  * @author longqiang
  */
-@Component(Constants.NACOS_MANAGEMENT)
-@ConditionalOnProperty(name = "ruleDataSource", havingValue = "nacos")
+@Component(DATASOURCE_NACOS + MANAGEMENT)
+@ConditionalOnProperty(name = "disableNacos", havingValue = "false", matchIfMissing = true)
 public class NacosManagement implements DataSourceManagement<ConfigService> {
 
     private Map<String, ConfigService> clientPool = new ConcurrentHashMap<>(16);

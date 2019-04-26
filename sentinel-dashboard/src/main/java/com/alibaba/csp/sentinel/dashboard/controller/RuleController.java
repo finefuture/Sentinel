@@ -4,6 +4,7 @@ import com.alibaba.csp.sentinel.dashboard.auth.AuthService;
 import com.alibaba.csp.sentinel.dashboard.datasource.entity.rule.RuleEntity;
 import com.alibaba.csp.sentinel.dashboard.discovery.MachineInfo;
 import com.alibaba.csp.sentinel.dashboard.domain.Result;
+import com.alibaba.csp.sentinel.dashboard.provider.RuleServiceProvider;
 import com.alibaba.csp.sentinel.dashboard.repository.rule.InMemoryRuleRepositoryAdapter;
 import com.alibaba.csp.sentinel.dashboard.transpot.publish.Publisher;
 import com.alibaba.csp.sentinel.util.StringUtil;
@@ -31,7 +32,7 @@ public abstract class RuleController<T extends RuleEntity> {
     protected AuthService<HttpServletRequest> authService;
 
     @Autowired
-    protected Publisher<T> publisher;
+    RuleServiceProvider<Publisher, T> publisherProvider;
 
     @GetMapping("/rules")
     protected Result<List<T>> queryMachineRules(HttpServletRequest request, String app, String ip, Integer port) {
@@ -56,8 +57,9 @@ public abstract class RuleController<T extends RuleEntity> {
     }
 
     protected void publishRules(T ruleEntity) {
+        Publisher publisher = publisherProvider.get(ruleEntity);
         if (!publisher.publish(ruleEntity.getApp(), ruleEntity.getIp(), ruleEntity.getPort())) {
-            logger.info("publish flow rules failed after rule delete");
+            logger.info("publish rules failed");
         }
     }
 

@@ -31,12 +31,12 @@ public abstract class FetchAdapter<T extends RuleEntity, C, M extends DataSource
     @Override
     public List<T> fetch(String app, String ip, int port) {
         return Optional.ofNullable(appManagement.getDetailApp(app))
-                .flatMap(appInfo -> appInfo.getMachine(ip, port))
-                .map(machineInfo -> new Tuple2<>((M) machineInfo, dataSourceManagement.getOrCreateClient((M) machineInfo)))
-                .filter(pair -> Objects.nonNull(pair.r2))
-                .map(pair -> getConfig(pair.r2, pair.r1))
-                .map(item -> dataSourceAdapter.convert(app, ip, port, item))
-                .orElse(null);
+                        .flatMap(appInfo -> appInfo.getMachine(ip, port))
+                        .map(machineInfo -> new Tuple2<>((M) machineInfo, dataSourceManagement.getOrCreateClient((M) machineInfo)))
+                        .filter(pair -> Objects.nonNull(pair.r2))
+                        .map(pair -> getConfig(pair.r2, pair.r1))
+                        .map(item -> dataSourceAdapter.convert(app, ip, port, item))
+                        .orElse(null);
     }
 
     protected String getKey(M machineInfo) {

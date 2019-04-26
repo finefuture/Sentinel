@@ -1,6 +1,5 @@
 package com.alibaba.csp.sentinel.dashboard.transpot.publish.inmemory;
 
-import com.alibaba.csp.sentinel.dashboard.Constants;
 import com.alibaba.csp.sentinel.dashboard.client.SentinelApiClient;
 import com.alibaba.csp.sentinel.dashboard.datasource.entity.rule.SystemRuleEntity;
 import com.alibaba.csp.sentinel.dashboard.repository.rule.InMemoryRuleRepositoryAdapter;
@@ -9,13 +8,17 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+import static com.alibaba.csp.sentinel.dashboard.Constants.DATASOURCE_IN_MEMORY;
+import static com.alibaba.csp.sentinel.dashboard.Constants.PUBLISHER;
+import static com.alibaba.csp.sentinel.dashboard.Constants.SYSTEM_RULE;
+
 /**
  * publish system rules to Target Machines by http client
  *
  * @author longqiang
  */
-@Component(Constants.SYSTEM_RULE_PUBLISHER)
-@ConditionalOnProperty(name = "ruleDataSource", havingValue = "inMemory", matchIfMissing = true)
+@Component(DATASOURCE_IN_MEMORY + SYSTEM_RULE + PUBLISHER)
+@ConditionalOnProperty(name = "disableInMemory", havingValue = "false", matchIfMissing = true)
 public class InMemorySystemRulePublisher extends InMemoryPublishAdapter<SystemRuleEntity> {
 
     public InMemorySystemRulePublisher(InMemoryRuleRepositoryAdapter<SystemRuleEntity> repository, SentinelApiClient sentinelApiClient) {

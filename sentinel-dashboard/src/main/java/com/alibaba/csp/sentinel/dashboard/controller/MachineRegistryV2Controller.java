@@ -27,9 +27,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
 
@@ -38,7 +38,7 @@ import java.util.Map;
  *
  * @author longqiang
  */
-@Controller
+@RestController
 @RequestMapping(value = "/registryV2", produces = MediaType.APPLICATION_JSON_VALUE)
 public class MachineRegistryV2Controller {
 
@@ -50,8 +50,7 @@ public class MachineRegistryV2Controller {
     @Autowired
     private Map<String, DataSourceManagement> managementMap;
 
-    @ResponseBody
-    @RequestMapping("/machine")
+    @GetMapping("/machine")
     public Result<?> receiveHeartBeat(String info, String v) {
         JSONObject jsonObject = JSONObject.parseObject(info);
         String dataSourceType = jsonObject.getString("dataSourceType");

@@ -93,9 +93,7 @@ public class DegradeController extends RuleController<DegradeRuleEntity> {
             logger.error("add error:", throwable);
             return Result.ofThrowable(-1, throwable);
         }
-        if (!publisher.publish(entity.getApp(), entity.getIp(), entity.getPort())) {
-            logger.error("Publish degrade rules failed after rule add");
-        }
+        publishRules(entity);
         return Result.ofSuccess(entity);
     }
 
@@ -143,9 +141,7 @@ public class DegradeController extends RuleController<DegradeRuleEntity> {
             logger.error("save error:", throwable);
             return Result.ofThrowable(-1, throwable);
         }
-        if (!publisher.publish(entity.getApp(), entity.getIp(), entity.getPort())) {
-            logger.error("Publish degrade rules failed after rule update");
-        }
+        publishRules(entity);
         return Result.ofSuccess(entity);
     }
 
@@ -168,9 +164,7 @@ public class DegradeController extends RuleController<DegradeRuleEntity> {
             logger.error("delete error:", throwable);
             return Result.ofThrowable(-1, throwable);
         }
-        if (!publisher.publish(oldEntity.getApp(), oldEntity.getIp(), oldEntity.getPort())) {
-            logger.error("Publish degrade rules failed after rule delete");
-        }
+        publishRules(oldEntity);
         return Result.ofSuccess(id);
     }
 

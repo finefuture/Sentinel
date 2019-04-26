@@ -1,6 +1,5 @@
 package com.alibaba.csp.sentinel.dashboard.controller.config.check;
 
-import com.alibaba.csp.sentinel.dashboard.Constants;
 import com.alibaba.csp.sentinel.dashboard.datasource.management.ApolloMachineInfo;
 import com.alibaba.csp.sentinel.dashboard.discovery.AppManagement;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,13 +9,16 @@ import org.springframework.stereotype.Component;
 import java.util.Objects;
 import java.util.Optional;
 
+import static com.alibaba.csp.sentinel.dashboard.Constants.CONFIG_CHANGE_CHECKER;
+import static com.alibaba.csp.sentinel.dashboard.Constants.DATASOURCE_APOLLO;
+
 /**
  * do some check if use Apollo as DataSource
  *
  * @author longqiang
  */
-@Component(Constants.CONFIG_CHANGE_CHECKER)
-@ConditionalOnProperty(name = "ruleDataSource", havingValue = "apollo")
+@Component(DATASOURCE_APOLLO + CONFIG_CHANGE_CHECKER)
+@ConditionalOnProperty(name = "disableApollo", havingValue = "false", matchIfMissing = true)
 public class ApolloChecker implements Checker {
 
     @Autowired
